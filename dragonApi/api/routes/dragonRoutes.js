@@ -2,7 +2,6 @@
 module.exports = function(app) {
   var dragon = require('../controllers/dragonController');
 
-
   // Dragon Routes
   app.route('/lobbies')
     .get(dragon.list_all_lobbies)
