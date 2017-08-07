@@ -5,8 +5,15 @@ var express = require('express'),
   model = require('./api/models/dragonModel'),
   bodyParser = require('body-parser');
 
+var db_url = 'mongodb://DB_user:db_password@ds115712.mlab.com:15712/dragon_db';
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/Dragondb');
+mongoose.connect(db_url, function(err, db) {
+  if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    console.log('Connection established to', db_url);
+  }
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
