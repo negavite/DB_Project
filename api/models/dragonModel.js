@@ -24,6 +24,11 @@ var ResultSchema = new Schema({
   results: [{time: Number, boat: Number}]
 });
 
+var RaceSchema = new Schema({
+  race: [{boat: Number, taps: Number}]
+});
+
 module.exports = mongoose.model('Lobbies', LobbySchema);
 module.exports = mongoose.model('Users', UserSchema);
 module.exports = mongoose.model('Results', ResultSchema);
+module.exports = mongoose,model('Races', RaceSchema);

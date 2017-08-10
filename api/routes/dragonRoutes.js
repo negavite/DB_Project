@@ -28,4 +28,13 @@ module.exports = function(app) {
   app.route('/results/:resultId')
     .get(dragon.get_result_info)
     .delete(dragon.delete_a_result);
+
+  app.route('/races')
+    .get(dragon.list_all_races)
+    .post(dragon.create_a_race);
+
+  app.route('/races/:raceId')
+    .get(dragon.get_race_info)
+    .put(dragon.update_a_race)
+    .delete(dragon.delete_a_race);    
 };
