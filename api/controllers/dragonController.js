@@ -2,7 +2,8 @@
 var mongoose = require('mongoose'),
   Lobby = mongoose.model('Lobbies'),
   User = mongoose.model('Users'),
-  Result = mongoose.model('Results');
+  Result = mongoose.model('Results'),
+  Race = mongoose.model('Races');
 
 // Lobby functions
 exports.list_all_lobbies = function(req, res) {
@@ -47,7 +48,7 @@ exports.update_a_lobby = function(req, res) {
     lobby.name = req.body.name;
     lobby.distance = req.body.distance;
     lobby.startFlag = req.body.startFlag;
-    lobby.paddlers += req.body.paddler;
+    //TODO: lobby.paddlers += req.body.paddler;
     lobby.boats = req.body.boats;
     lobby.save(function(err) {
       if (err)
@@ -105,7 +106,7 @@ exports.update_a_user = function(req, res) {
       res.send(err);
     
     user.username = req.body.username;
-    user.races += req.body.race;
+    //TODO: user.races += req.body.race;
 
     user.save(function(err) {
       if (err)
@@ -159,5 +160,60 @@ exports.delete_a_result = function(req, res) {
     if (err)
       res.send(err);
     res.json({ message: 'Result successfully deleted' });
+  });
+};
+
+// Race Functions
+exports.list_all_races = function(req, res) {
+  Race.find({}, function(err, race) {
+    if(err)
+      res.send(err);
+
+    res.json(race);
+  });
+};
+
+exports.create_a_race = function(req, res) {
+  var new_race = new Race(req.body);
+  new_race.raceData = [0];
+
+  new_race.save(function(err, race) {
+    if (err)
+      res.send(err);
+
+    res.json(race);
+  });
+};
+
+exports.get_race_info = function(req, res) {
+  Race.findById(req.params.raceId, function(err, race) {
+    if (err)
+      res.send(err);
+    res.json(race);
+  });
+};
+
+exports.update_a_race = function(req, res) {
+  Race.findById(req.params.raceId, function(err, race) {
+    if (err)
+      res.send(err);
+
+    var newValue = race.raceData[req.body.boat] + parseInt(req.body.taps);
+    race.raceData.set(req.body.boat, newValue);
+
+    race.save(function(err, race) {
+      if (err)
+        res.send(err);
+
+      res.json(race);
+    });
+  });
+};
+
+exports.delete_a_race = function(req, res) {
+  Race.remove({_id: req.params.raceId}, function(err, race) {
+    if (err)
+      res.send(err);
+    res.json({ message: 'Race successfully deleted' });
   });
 };

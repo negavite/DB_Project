@@ -25,10 +25,10 @@ var ResultSchema = new Schema({
 });
 
 var RaceSchema = new Schema({
-  race: [{boat: Number, taps: Number}]
+  raceData: [Number]
 });
 
 module.exports = mongoose.model('Lobbies', LobbySchema);
 module.exports = mongoose.model('Users', UserSchema);
 module.exports = mongoose.model('Results', ResultSchema);
-module.exports = mongoose,model('Races', RaceSchema);
+module.exports = mongoose.model('Races', RaceSchema);
