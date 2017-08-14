@@ -5,9 +5,10 @@ var Schema = mongoose.Schema;
 var LobbySchema = new Schema({
   name: String,
   distance: Number,
-  boats: Number,
+  numBoats: Number,
   paddlers: [{username: String, boat: Number, ready: Boolean}],
-  startFlag: Boolean
+  startFlag: Boolean,
+  password: String
 });
 
 var UserSchema = new Schema({

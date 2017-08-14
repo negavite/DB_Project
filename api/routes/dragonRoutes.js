@@ -12,6 +12,9 @@ module.exports = function(app) {
     .put(dragon.update_a_lobby)
     .delete(dragon.delete_a_lobby);
 
+  app.route('/joinLobby/:lobbyId')
+    .put(dragon.join_a_lobby);    
+
   app.route('/users')
     .get(dragon.list_all_users)
     .post(dragon.create_a_user);

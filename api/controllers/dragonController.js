@@ -48,13 +48,37 @@ exports.update_a_lobby = function(req, res) {
     lobby.name = req.body.name;
     lobby.distance = req.body.distance;
     lobby.startFlag = req.body.startFlag;
-    //TODO: lobby.paddlers += req.body.paddler;
-    lobby.boats = req.body.boats;
+    lobby.numBoats = req.body.numBoats;
+
     lobby.save(function(err) {
       if (err)
         res.send(err);
 
       res.json({message: 'Lobby updated'});
+    });
+  });
+};
+
+exports.join_a_lobby = function(req, res) {
+  Lobby.findById(req.params.lobbyId, function(err, lobby) {
+    if (err)
+      res.send(err);
+    
+    if(lobby.passwordProtected){
+      if(lobby.password.equals(req.body.password)){
+        var newPaddler = {username: req.body.username, ready: false};
+        lobby.paddlers.push(newPaddler);
+      }
+      else{
+        res.json({message: 'Cannot join lobby.  Incorrect password.'});
+      }
+    }
+
+    lobby.save(function(err) {
+      if (err)
+        res.send(err);
+
+      res.json({message: 'Successfully joined lobby.'});
     });
   });
 };
