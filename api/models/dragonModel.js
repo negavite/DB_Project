@@ -21,7 +21,7 @@ var UserSchema = new Schema({
 var ResultSchema = new Schema({
   lobbyName: String,
   distance: Number,
-  paddlers: [{username: String, boat: Number, ready: Boolean}],
+  paddlers: [],
   results: [{time: Number, boat: Number}]
 });
 

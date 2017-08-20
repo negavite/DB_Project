@@ -19,7 +19,8 @@ exports.create_a_lobby = function(req, res) {
   new_lobby.startFlag = false;
   new_lobby.paddlers = [];
   new_lobby.boats = 1;
-
+  //new_lobby.passwordProtected = false;
+  //new_lobby.password = "";
   new_lobby.save(function(err, lobby) {
     if (err)
       res.send(err);
@@ -61,21 +62,35 @@ exports.join_a_lobby = function(req, res) {
     if (err)
       res.send(err);
     
-    if(lobby.passwordProtected){
-      if(lobby.password.equals(req.body.password)){
-        var newPaddler = {username: req.body.username, ready: false};
-        lobby.paddlers.push(newPaddler);
-      }
-      else{
-        res.json({message: 'Cannot join lobby.  Incorrect password.'});
-      }
-    }
+    // Todo: lobby passwords
 
+    var newPaddler = {username: req.body.username, boat: -1, ready: false};
+    lobby.paddlers.push(newPaddler);
     lobby.save(function(err) {
       if (err)
         res.send(err);
 
       res.json({message: 'Successfully joined lobby.'});
+    });
+  });
+};
+
+exports.leave_a_lobby = function(req, res) {
+  Lobby.findById(req.params.lobbyId, function(err, lobby) {
+    if (err)
+      res.send(err);
+    
+    for(var i = 0; i < lobby.paddlers.length; i++){
+      if(lobby.paddlers[i]['username'] == req.body.username){
+        lobby.paddlers.pop(i);
+      }
+    }
+    
+    lobby.save(function(err) {
+      if (err)
+        res.send(err);
+
+      res.json({message: 'Successfully left lobby.'});
     });
   });
 };

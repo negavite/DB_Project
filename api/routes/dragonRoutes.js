@@ -16,7 +16,10 @@ module.exports = function(app) {
     .delete(lobbyController.delete_a_lobby);
 
   app.route('/joinLobby/:lobbyId')
-    .put(lobbyController.join_a_lobby);    
+    .put(lobbyController.join_a_lobby);
+  
+  app.route('/leaveLobby/:lobbyId')
+    .put(lobbyController.leave_a_lobby);
 
   app.route('/users')
     .get(userController.list_all_users)
