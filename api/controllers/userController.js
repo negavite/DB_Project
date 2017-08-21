@@ -1,6 +1,6 @@
 'use strict';
 var mongoose = require('mongoose'),
-  Users = mongoose.model('Users');
+  User = mongoose.model('Users');
   
 // User Functions
 exports.list_all_users = function(req, res) {

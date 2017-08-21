@@ -1,6 +1,6 @@
 'use strict';
 var mongoose = require('mongoose'),
-  Results = mongoose.model('Results');
+  Result = mongoose.model('Results');
 
 // Result Functions
 exports.list_all_results = function(req, res) {

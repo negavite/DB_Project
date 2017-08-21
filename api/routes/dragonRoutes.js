@@ -6,6 +6,9 @@ module.exports = function(app) {
     raceController = require('../controllers/raceController');
 
   // API Routes
+  app.route('/')
+    .get(userController.get_user_info);
+
   app.route('/lobbies')
     .get(lobbyController.list_all_lobbies)
     .post(lobbyController.create_a_lobby);
